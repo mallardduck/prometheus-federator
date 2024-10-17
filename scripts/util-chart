@@ -24,7 +24,7 @@ function edit-charts() {
 }
 
 function package-charts() {
-    helm package --debug "${1:-"./build/charts/helm-project-operator"}" -d "${2:-"./dist/artifacts"}"
+    helm package --debug "${1:-"./build/charts/helm-project-operator"}" -d "${2:-"./build/charts"}"
 }
 
 function clean-old-chart() {
