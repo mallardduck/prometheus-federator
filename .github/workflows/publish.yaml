@@ -13,18 +13,16 @@ env:
 
 jobs:
   helm-locker-ci:
+    if: ${{ github.repository == 'rancher/prometheus-federator' }}
     uses: ./.github/workflows/hl-ci.yaml
   helm-project-operator-ci:
+    if: ${{ github.repository == 'rancher/prometheus-federator' }}
     uses: ./.github/workflows/hpo-ci.yaml
     with:
       skip_build: 'true'
   goreleaser:
     name: Build go binaries and helm chart
-    runs-on : runs-on,image=ubuntu22-full-x64,runner=4cpu-linux-x64,run-id=${{ github.run_id }}
-    needs: [
-      helm-locker-ci,
-      helm-project-operator-ci,
-    ]
+    runs-on: ${{ github.repository != 'rancher/prometheus-federator' && 'ubuntu-latest' || format('runs-on,image=ubuntu22-full-x64,runner=4cpu-linux-x64,run-id={}', github.run_id) }}
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GORELEASER_CURRENT_TAG: ${{ github.ref_name }}
@@ -62,7 +60,7 @@ jobs:
           GORELEASER_CURRENT_TAG: ${{ github.ref_name }}
   push-dev-images:
     name : Build and push helm-locker & Helm-Project-Operator images
-    runs-on : runs-on,image=ubuntu22-full-x64,runner=4cpu-linux-x64,run-id=${{ github.run_id }}
+    runs-on: ${{ github.repository != 'rancher/prometheus-federator' && 'ubuntu-latest' || format('runs-on,image=ubuntu22-full-x64,runner=4cpu-linux-x64,run-id={}', github.run_id) }}
     needs: [
       helm-locker-ci,
       helm-project-operator-ci,
@@ -115,7 +113,8 @@ jobs:
 
   publish-images:
     name: Publish prometheus-federator image
-    runs-on: ubuntu-latest
+    if: ${{ github.repository == 'rancher/prometheus-federator' }}
+    runs-on: ${{ github.repository != 'rancher/prometheus-federator' && 'ubuntu-latest' || format('runs-on,image=ubuntu22-full-x64,runner=4cpu-linux-x64,run-id={}', github.run_id) }}
     needs: [
       helm-locker-ci,
       helm-project-operator-ci,
