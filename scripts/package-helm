@@ -14,7 +14,7 @@ source "$(dirname "$0")/util-chart"
 if [[ "${BUILD_TARGET}" == "prometheus-federator" ]]; then
   mkdir -p ./dist/artifacts/
   CHART_VERSION=${EMBEDDED_CHART_VERSION:-$(find "./charts/${BUILD_TARGET}" -maxdepth 1 -mindepth 1 -type d | tr - \~ | sort -rV | tr \~ - | head -n1 | cut -d'/' -f4)}
-  cp -a "./assets/${BUILD_TARGET}/${BUILD_TARGET}-${CHART_VERSION}.tgz" ./dist/artifacts/
+  cp -a "./assets/${BUILD_TARGET}/${BUILD_TARGET}-${CHART_VERSION}.tgz" ./build/charts/
   exit
 fi
 
