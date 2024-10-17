@@ -30,8 +30,6 @@ clean-old-chart "$BUILD_TARGET"
 mkdir -p dist/artifacts dist/charts
 cp -rf "${DEFAULT_CHART_SOURCE}" "./build/charts/${BUILD_TARGET}"
 
-if [ "$BUILD_TARGET" == "helm-locker" ]; then
-  edit-charts "./build/charts/${BUILD_TARGET}/Chart.yaml" "${HELM_CHART_VERSION}" "${HELM_IMAGE_TAG}"
-fi
+edit-charts "./build/charts/${BUILD_TARGET}/Chart.yaml" "${HELM_CHART_VERSION}" "${HELM_IMAGE_TAG}"
 cp -a "./build/charts/${BUILD_TARGET}" "./dist/charts/${BUILD_TARGET}"
 package-charts "./build/charts/${BUILD_TARGET}"
