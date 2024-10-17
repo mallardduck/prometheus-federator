@@ -62,11 +62,7 @@ jobs:
           GORELEASER_CURRENT_TAG: ${{ github.ref_name }}
   push-dev-images:
     name : Build and push helm-locker & Helm-Project-Operator images
-    runs-on : runs-on,image=ubuntu22-full-x64,runner=4cpu-linux-x64,run-id=${{ github.run_id }}
-    needs: [
-      helm-locker-ci,
-      helm-project-operator-ci,
-    ]
+    runs-on : ubuntu-latest
     permissions:
       contents: read
       packages: write
