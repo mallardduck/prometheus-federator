@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -x
 
 if ! hash helm 2>/dev/null; then
     echo "Helm is not installed"
