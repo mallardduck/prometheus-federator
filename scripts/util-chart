@@ -31,5 +31,7 @@ function clean-old-chart() {
   if [[ -d "./build/charts/${1}" ]]; then
     rm -rf "./build/charts/${1}"
   fi
-  mkdir -p "build/charts/${1}"
+  if [[ ! -d "./build/charts" ]]; then
+    mkdir -p "./build/charts"
+  fi
 }
