@@ -1,9 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
+
+# We only do this for prometheus-federator
+if [[ "${BUILD_TARGET}" != "prometheus-federator" ]]; then
+  exit
+fi
 
 cd $(dirname $0)/..
 
-
+echo "Validating newest prometheus-federator chart"
 CHART=prometheus-federator
 VERSION=$(find ./charts/${CHART} -type d -maxdepth 1 -mindepth 1 | tr - \~ | sort -rV | tr \~ - | head -n1 | cut -d'/' -f4)
 

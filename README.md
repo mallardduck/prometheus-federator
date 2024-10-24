@@ -1,7 +1,25 @@
 prometheus-federator
 ========
 
-Prometheus Federator is an operator (powered by [`rancher/helm-project-operator`](https://github.com/rancher/helm-project-operator) and [`rancher/charts-build-scripts`](https://github.com/rancher/charts-build-scripts)) that manages deploying one or more Project Monitoring Stacks composed of the following set of resources that are scoped to project namespaces:
+This repo contains a set of three interlinked projects:
+
+- The **Prometheus Federator** is a k8s Operator that manages deploying Project Monitoring Stacks.
+- The **Helm Project Operator** is a generic design for a Kubernetes Operator that acts on `ProjectHelmChart` CRs.
+- **Helm Locker** is a Kubernetes operator that prevents resource drift on (i.e. "locks") Kubernetes objects that are tracked by Helm 3 releases.
+
+> [!NOTE]
+> The last two project (helm-project-operator and helm-locker) are not intended or supported for standalone use.
+
+For more info on _Helm Project Operator_, see the [dedicated README file](README-helm-project-operator.md).  
+For more info on _Helm Locker_, see the [dedicated README file](README-helm-locker.md).
+
+## Getting Started
+
+For more information, see the [Getting Started guide](docs/prometheus-federator/gettingstarted.md).
+
+## More Info
+
+Prometheus Federator is an operator (powered by [`rancher/helm-project-operator`](README-helm-project-operator.md) and [`rancher/charts-build-scripts`](README-helm-locker.md)) that manages deploying one or more Project Monitoring Stacks composed of the following set of resources that are scoped to project namespaces:
 - [Prometheus](https://prometheus.io/) (managed externally by [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator))
 - [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/) (managed externally by [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator))
 - [Grafana](https://github.com/helm/charts/tree/master/stable/grafana) (deployed via an embedded Helm chart)
@@ -16,28 +34,23 @@ For more information on ProjectHelmCharts and how to configure the underlying op
 
 For more information on how to configure the underlying Project Monitoring Stack, please read the [`README.md` of the underlying chart](packages/rancher-project-monitoring/charts/README.md) (`rancher-project-monitoring`).
 
-
-## Getting Started
-
-For more information, see the [Getting Started guide](docs/gettingstarted.md).
-
 ## Developing
 
 ### Which branch do I make changes on?
 
 Prometheus Federator is built and released off the contents of the `main` branch. To make a contribution, open up a PR to the `main` branch.
 
-For more information, see the [Developing guide](docs/developing.md).
+For more information, see the [Developing guide](docs/prometheus-federator/developing.md).
 
 ## Building
 
 `make`
 
-> **Note:** For a more in-depth explanation of how Prometheus Federator is built (intended for anyone who would like to fork this repo to create a new Project Operator!), see the [Build guide](docs/build.md).
+> **Note:** For a more in-depth explanation of how Prometheus Federator is built (intended for anyone who would like to fork this repo to create a new Project Operator!), see the [Build guide](docs/prometheus-federator/build.md).
 
 ## Running
 
-`./bin/prometheus-federator`
+`./build/bin/prometheus-federator`
 
 ## Versioning and Releasing For Rancher
 
@@ -45,7 +58,7 @@ While this repository does maintain a standalone Helm repository for vanilla Hel
 
 **The chart in rancher/charts is generally the version that is intended for use in production since that is the chart that will be tested by Rancher's QA team.** Generally, these charts will match stable versions of charts available in this repository, so non-Rancher users **should** be able to safely use those versions in this repository for production use cases (at their own risk).
 
-For more information on the process maintainers of this repository use to mirror these charts over to [`rancher/charts`](https://github.com/rancher/charts), see the [Rancher release guide](docs/rancher_release.md).
+For more information on the process maintainers of this repository use to mirror these charts over to [`rancher/charts`](https://github.com/rancher/charts), see the [Rancher release guide](docs/prometheus-federator/rancher_release.md).
 
 ## License
 Copyright (c) 2020 [Rancher Labs, Inc.](http://rancher.com)

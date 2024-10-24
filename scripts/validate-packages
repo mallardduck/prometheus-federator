@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
+echo "Validating packages..."
 cd $(dirname $0)/..
 
 monitoring_pkg_path=packages/rancher-project-monitoring/package.yaml
@@ -27,3 +28,5 @@ if [[ "${monitoring_commit}" != "${grafana_commit}" ]]; then
     echo "ERROR: Expected .commit in ${grafana_pkg_path} (found ${grafana_commit}) to match .commit in ${monitoring_pkg_path} (found ${monitoring_commit})"
     exit 1
 fi
+
+echo "Completed validating packages"
