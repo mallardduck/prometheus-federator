@@ -115,21 +115,24 @@ jobs:
             const images = [
               {
                 name: 'Helm Locker',
+                key: 'meta-helm-locker',
                 url: `https://github.com/${{ github.repository }}/pkgs/container/prometheus-federator%2Fhelm-locker`
               },
               {
                 name: 'Helm Project Operator',
+                key: 'meta-helm-project-operator',
                 url: `https://${process.env.GHCR_REGISTRY}/${{ github.repository }}/pkgs/container/prometheus-federator%2Fhelm-project-operator`
               },
               {
                 name: 'Prometheus Federator',
+                key: 'meta-prometheus-federator',
                 url: `https://${process.env.GHCR_REGISTRY}/${{ github.repository }}/pkgs/container/prometheus-federator`
               }
             ];
 
             const commentBody = images
-              .map(image => `- **${image.name}**: [Link to image](${image.url}):\n  Tags: \`${steps['meta-' + image.name.replace(/\s+/g, '-').toLowerCase()].outputs.tags}\``)
-              .join('\n\n');
+              .map(image => `- **${image.name}**: [Link to image](${image.url}):\n  Tags: \`${steps[image.key].outputs.tags}\``)
+              .join('\n\n');1
 
             github.rest.issues.createComment({
               issue_number: prNumber,
