@@ -51,7 +51,7 @@ jobs:
             echo "::set-output name=install_yq::false"
           fi
       - name : Install YQ
-        if: steps.check_yq.outputs.install_yq
+        if: steps.check_yq.outputs.install_yq == 'true'
         run: |
           sudo wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${{ matrix.arch == 'x64' && 'amd64' || matrix.arch  }} -O /usr/bin/yq && sudo chmod +x /usr/bin/yq;
       - name : Install helm

@@ -75,10 +75,12 @@ jobs:
             echo "::set-output name=install_yq::true"
           else
             echo "yq is already installed"
+            YQ_BIN=$(which yq)
             echo "::set-output name=install_yq::false"
+            echo "::set-output name=yq_path::$YQ_BIN"
           fi
       - name : Install YQ
-        if: steps.check_yq.outputs.install_yq
+        if: steps.check_yq.outputs.install_yq == 'true'
         run: |
           sudo wget https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${{ matrix.arch == 'x64' && 'amd64' || matrix.arch  }} -O /usr/bin/yq && sudo chmod +x /usr/bin/yq;
       - name : Export image version
