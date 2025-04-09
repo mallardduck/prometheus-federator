@@ -37,7 +37,7 @@ fi
 if echo "$TAG" | grep -q dirty; then
     TAG="v0.0.0-dev.1-${COMMIT}"
     HELM_IMAGE_TAG=$TAG
-    HELM_CHART_VERSION=${HELM_CHART_VERSION_DEV:-${HELM_IMAGE_TAG/v/}}
+    HELM_CHART_VERSION=0.0.0
 fi
 IMAGE=${IMAGE:-"$REPO/${BUILD_TARGET}:${TAG}"}
 
